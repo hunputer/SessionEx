@@ -31,12 +31,12 @@ public class MainController {
         UserVO userVO = SessionUtil.getUser(request);
         request.setAttribute("user", userVO);
 
-        return "/main";
+        return "main";
     }
 
     @GetMapping("/loginReg")
     public String loginRegForm(HttpServletRequest request){
-        return "/loginRegForm";
+        return "loginRegForm";
     }
 
     @PostMapping("/login")
