@@ -4,6 +4,9 @@
 
 <mapper namespace="com.example.sessionEx.dao.MainDAO">
     <select id="getUser" resultType="UserVO">
-        SELECT * FROM USER
+        SELECT *
+          FROM USER
+         WHERE id = '${id}'
+           AND passwd = '${passwd}'
     </select>
 </mapper>

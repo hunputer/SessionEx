@@ -8,5 +8,5 @@ import java.util.List;
 @Mapper
 public interface MainDAO {
 
-    List<UserVO> getUser();
+    UserVO getUser(UserVO userVo);
 }

@@ -12,8 +12,8 @@ public class MainService {
 
     private final MainDAO mainDAO;
 
-    public List<UserVO> getUser(){
-        return mainDAO.getUser();
+    public UserVO getUser(UserVO userVo){
+        return mainDAO.getUser(userVo);
     }
 
 }

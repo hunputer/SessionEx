@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -30,20 +31,21 @@ public class MainController {
         UserVO userVO = SessionUtil.getUser(request);
         request.setAttribute("user", userVO);
 
-        return "mainForm";
+        return "/main";
     }
 
     @GetMapping("/loginReg")
     public String loginRegForm(HttpServletRequest request){
-        return "loginForm";
+        return "/loginRegForm";
     }
 
     @PostMapping("/login")
     public void login(HttpServletRequest request, @RequestBody UserVO userVO){
-        List<UserVO> userList = mainService.getUser();
-        UserVO user = userList.get(0);
+        UserVO user = mainService.getUser(userVO);
 
-        SessionUtil.login(request, user);
+        if(user != null && user.getId() != "") {
+            SessionUtil.login(request, user);
+        }
     }
 
     @PostMapping("/logout")
