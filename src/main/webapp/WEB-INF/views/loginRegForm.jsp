@@ -20,14 +20,20 @@
         $.ajax({
             type: "post",
             url: "/login",
-            dataType: "text",
+            dataType: "json",
             data:JSON.stringify({"id":id,"passwd":passwd}),
             contentType : "application/json; charset=utf-8",
             error: function() {
                 console.log('통신실패!!');
             },
             success: function(data) {
-                console.log("통신데이터 값 : " + data);
+                let code = data.code;
+
+                if(code == 200){
+                    location.href = "/"
+                }else{
+                    alert("계정 정보가 다릅니다");
+                }
             }
         });
     });

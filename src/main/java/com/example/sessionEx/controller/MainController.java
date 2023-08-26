@@ -1,5 +1,6 @@
 package com.example.sessionEx.controller;
 
+import com.example.sessionEx.entity.LoginEntity;
 import com.example.sessionEx.service.MainService;
 import com.example.sessionEx.util.SessionUtil;
 import com.example.sessionEx.vo.UserVO;
@@ -39,20 +40,26 @@ public class MainController {
 
     @GetMapping("/loginReg")
     public String loginRegForm(HttpServletRequest request){
+
+        if(SessionUtil.isLogin(request)){
+            return "redirect:/";
+        }
+
         return "loginRegForm";
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserVO> login(HttpServletRequest request, @RequestBody UserVO userVO){
+    public ResponseEntity<LoginEntity> login(HttpServletRequest request, @RequestBody UserVO userVO){
+        LoginEntity loginEntity = new LoginEntity();
         UserVO user = mainService.getUser(userVO);
 
         if(user != null && user.getId() != "") {
             SessionUtil.login(request, user);
-            userVO.setCode(200);
-            return new ResponseEntity<>(userVO, HttpStatus.OK);
+            loginEntity.setCode(200);
+            return new ResponseEntity<>(loginEntity, HttpStatus.OK);
         }else{
-            userVO.setCode(401);
-            return new ResponseEntity<>(userVO, HttpStatus.NOT_FOUND);
+            loginEntity.setCode(401);
+            return new ResponseEntity<>(loginEntity, HttpStatus.OK);
         }
     }
 
