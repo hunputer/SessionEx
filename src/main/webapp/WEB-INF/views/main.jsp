@@ -7,6 +7,6 @@
     <title>Spring Boot Application with JSP</title>
 </head>
 <body>
-Hello, Spring Boot App
+${user.id}님 환영합니다.
 </body>
 </html>
