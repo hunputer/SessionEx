@@ -6,6 +6,9 @@ import com.example.sessionEx.vo.UserVO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.websocket.Session;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,11 +43,16 @@ public class MainController {
     }
 
     @PostMapping("/login")
-    public void login(HttpServletRequest request, @RequestBody UserVO userVO){
+    public ResponseEntity<UserVO> login(HttpServletRequest request, @RequestBody UserVO userVO){
         UserVO user = mainService.getUser(userVO);
 
         if(user != null && user.getId() != "") {
             SessionUtil.login(request, user);
+            userVO.setCode(200);
+            return new ResponseEntity<>(userVO, HttpStatus.OK);
+        }else{
+            userVO.setCode(401);
+            return new ResponseEntity<>(userVO, HttpStatus.NOT_FOUND);
         }
     }
 
