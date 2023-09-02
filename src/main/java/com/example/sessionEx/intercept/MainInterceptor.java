@@ -13,13 +13,10 @@ public class MainInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        String ip = SessionUtil.getClientIp(request);
+        InetAddress ia = InetAddress.getLocalHost();
 
-        System.out.println(ip);
+        System.out.println(ia.getHostAddress());
 
-        InetAddress ia = null;
-
-        ip = ia.getHostAddress();
 
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
