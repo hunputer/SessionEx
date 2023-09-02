@@ -23,11 +23,14 @@ public class MainInterceptor implements HandlerInterceptor {
 
         InetAddress ia = InetAddress.getLocalHost();
 
-        List<IpBanVO> ipBanList = mainService.getIpBanList();
+        boolean a = mainService.getIpBanList()
+                .stream()
+                .anyMatch(ip -> ip.getIp().equals(ia.getHostAddress()));
 
-        String abc = ia.getHostAddress();
-
-        boolean a = mainService.getIpBanList().stream().anyMatch(ip -> ip.equals(ia.getHostAddress()));
+        if(a == true){
+            response.sendRedirect(request.getContextPath()+"/error");
+            return false;
+        }
 
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }

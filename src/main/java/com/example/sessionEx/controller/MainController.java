@@ -67,4 +67,9 @@ public class MainController {
     public void logout(HttpServletRequest request){
         SessionUtil.logout(request);
     }
+
+    @GetMapping("/error")
+    public String errorPage(HttpServletRequest request){
+        return "error";
+    }
 }
