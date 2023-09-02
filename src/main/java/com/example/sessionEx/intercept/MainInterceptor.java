@@ -1,22 +1,33 @@
 package com.example.sessionEx.intercept;
 
+import com.example.sessionEx.service.MainService;
 import com.example.sessionEx.util.SessionUtil;
+import com.example.sessionEx.vo.IpBanVO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.net.InetAddress;
+import java.util.List;
 
+@RequiredArgsConstructor
 public class MainInterceptor implements HandlerInterceptor {
+
+    private final MainService mainService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         InetAddress ia = InetAddress.getLocalHost();
 
-        System.out.println(ia.getHostAddress());
+        List<IpBanVO> ipBanList = mainService.getIpBanList();
 
+        String abc = ia.getHostAddress();
+
+        boolean a = mainService.getIpBanList().stream().anyMatch(ip -> ip.equals(ia.getHostAddress()));
 
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }

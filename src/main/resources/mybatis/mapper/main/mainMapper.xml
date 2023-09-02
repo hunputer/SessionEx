@@ -9,4 +9,9 @@
          WHERE id = '${id}'
            AND passwd = '${passwd}'
     </select>
+
+    <select id="getIpBanList" resultType="IpBanVO">
+        SELECT *
+        FROM ipban
+    </select>
 </mapper>
